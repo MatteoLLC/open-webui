@@ -14,3 +14,34 @@ export const ssr = false;
 // the URL for about page will be /about/ with 'always'
 // https://kit.svelte.dev/docs/page-options#trailingslash
 export const trailingSlash = 'ignore';
+
+'use client';
+ 
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { useRouter } from 'next/navigation';
+ 
+export function Insights() {
+  const router = useRouter();
+ 
+  return <SpeedInsights route={router.pathname} />;
+}
+
+import { Insights } from './insights';
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <head>
+        <title>Next.js</title>
+      </head>
+      <body>
+        {children}
+        <Insights />
+      </body>
+    </html>
+  );
+}
